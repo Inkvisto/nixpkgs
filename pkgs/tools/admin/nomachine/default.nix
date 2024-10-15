@@ -58,12 +58,12 @@ stdenv.mkDerivation rec {
   postUnpack = ''
     mv $(find . -type f -name nxserver.tar.gz) .
     mv $(find . -type f -name nxnode.tar.gz) .
-    mv $(find . -type f -name nxclient.tar.gz) .
+    mv $(find . -type f -name nxrunner.tar.gz) .
     mv $(find . -type f -name nxplayer.tar.gz) .
     rm -r NX/
     tar xf nxserver.tar.gz
     tar xf nxnode.tar.gz
-    tar xf nxclient.tar.gz
+    tar xf nxrunner.tar.gz
     tar xf nxplayer.tar.gz
     rm $(find . -maxdepth 1 -type f)
     rm -r NX/share/src/nxusb-legacy
@@ -85,7 +85,7 @@ stdenv.mkDerivation rec {
   '';
 
   installPhase = ''
-    rm bin/nxserver bin/nxclient bin/nxplayer
+    rm bin/nxserver bin/nxrunner bin/nxplayer
 
     mkdir -p $out/NX
     cp -r etc scripts bin lib share $out/NX/
@@ -215,7 +215,7 @@ stdenv.mkDerivation rec {
 
     # NXCLIENT BEGIN
     makeWrapper $out/bin/nxplayer.bin $out/bin/nxplayer --set NX_SYSTEM $out/NX
-    makeWrapper $out/bin/nxclient.bin $out/bin/nxclient --set NX_SYSTEM $out/NX
+    makeWrapper $out/bin/nxrunner.bin $out/bin/nxrunner --set NX_SYSTEM $out/NX
 
     # libnxcau.so needs libpulse.so.0 for audio to work, but doesn't
     # have a DT_NEEDED entry for it.
